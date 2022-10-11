@@ -1,0 +1,47 @@
+var statusA = 'you have an A'
+var statusIC1 = 'you have an IC1 :('
+var statusIC2 = 'you have an IC2 :(('
+var statusIC3 = 'you have an IC3 :((('
+//this part is where you set the text you want to send to each group
+
+var listofAs = '';
+var listofIC1s = '';
+var listofIC2s = '';
+var listofIC3s = '';
+//this is where we make the lists that will hold which emails have As, IC1s, etc
+
+function sortByStatus(){
+for(var row = 2; row<=11; row++){
+  var currentValue = SpreadsheetApp.getActiveSheet().getRange(row, 5).getValue();
+  var currentEmail = SpreadsheetApp.getActiveSheet().getRange(row, 4).getValue();
+  if(currentValue == 'A'){
+    listofAs = listofAs + currentEmail + ', ';
+  }else if(currentValue == 'IC1'){
+    listofIC1s = listofIC1s + currentEmail + ', ';
+  }else if(currentValue == 'IC2'){
+    listofIC2s = listofIC2s + currentEmail + ', ';
+  }else if(currentValue == 'IC3'){
+    listofIC3s = listofIC3s + currentEmail + ', ';
+  }
+}
+console.log("The following emails have an A status: " + listofAs);
+console.log("The following emails have an IC1 status: " + listofIC1s);
+console.log("The following emails have an IC2 status: " + listofIC2s);
+console.log("The following emails have an IC3 status: " + listofIC3s);
+}
+//the lists in lines 7=>10 should now be filled with the correct emails}
+
+
+function emailSender(){
+  var Gmail = GmailApp;
+  Gmail.sendEmail(emailtest,'NHS Status',statusIC1);
+  Gmail.sendEmail(emailtest,'NHS Status',statusIC1);
+  Gmail.sendEmail(emailtest,'NHS Status',statusIC1);
+  Gmail.sendEmail(emailtest,'NHS Status',statusIC1);
+  console.log('Emails have been sent');
+  var emailQuotaRemaining = MailApp.getRemainingDailyQuota();
+  Logger.log("Remaining email quota: " + emailQuotaRemaining);
+}
+//this is the part where the code gets the email groups and sends the corresponding emails
+//be careful since you have a limited email quota and because you can't unsend emails
+//before you execute this function make sure to double check that lines 27 => 30 outputted the right addresses (just skim and make sure nothing looks out of place)
